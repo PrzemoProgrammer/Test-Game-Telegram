@@ -33,8 +33,8 @@ class MenuScene extends Phaser.Scene {
     if (document.getElementById("loadingIcon"))
       document.getElementById("loadingIcon").remove();
 
-    // this.tonWalletsTemplate();
-    // this.shareScoreTelegramButton();
+    this.tonWalletsTemplate();
+    this.shareScoreTelegramButton();
   }
   // ! /////////////////////////// TON WALLET
   async tonWalletsTemplate() {
