@@ -91,8 +91,6 @@ class PreloadScene extends Phaser.Scene {
       "choose_skin_text",
       "sepolia_testnet_image",
       "tg-wallet-icon",
-      "tonkeeper-wallet-icon",
-      "openmask-wallet-icon",
     ];
 
     this.images.forEach((img) => {

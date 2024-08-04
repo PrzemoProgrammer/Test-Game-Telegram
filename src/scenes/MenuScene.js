@@ -37,47 +37,17 @@ class MenuScene extends Phaser.Scene {
   }
   // ! /////////////////////////// TON WALLET
   async tonWalletsTemplate() {
-    this.SDKConnection = new TonConnectSDK.TonConnect();
-    this.tonWalletsData = await this.SDKConnection.getWallets();
-
-    const supportedWallets = [
-      {
-        name: "Wallet",
-        img: "tg-wallet-icon",
-      },
-      {
-        name: "Tonkeeper",
-        img: "tonkeeper-wallet-icon",
-      },
-      {
-        name: "OpenMask",
-        img: "openmask-wallet-icon",
-      },
-    ];
-
-    supportedWallets.forEach((walletData, i) =>
-      this.createWallet(100 + 350 * i, 100, walletData)
-    );
-  }
-
-  createWallet(x, y, walletData) {
-    const { universalLink, bridgeUrl } = this.getSDKWalletData(walletData.name);
-    const walletButton = new Button(this, x, y, walletData.img);
-
-    walletButton.onClick(() => {
-      const connectURL = this.SDKConnection.connect({
-        universalLink,
-        bridgeUrl,
-      });
-
-      window.open(connectURL);
-      console.log(connectURL);
+    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+      manifestUrl: "https://<YOUR_APP_URL>/tonconnect-manifest.json",
     });
+    const connectButton = new Button(this, this.halfW, 150, "tg-wallet-icon");
+    connectButton.onClick(() => {
+      tonConnectUI.modal.open();
+    });
+
+    tonConnectUI.modal.onStateChange((state) => console.log(state));
   }
 
-  getSDKWalletData(walletName) {
-    return this.tonWalletsData.find((wallet) => wallet.name === walletName);
-  }
   // ! //////////////////////////////////////
 
   addRiskyJumperText() {
