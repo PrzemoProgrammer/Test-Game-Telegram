@@ -32,7 +32,50 @@ class MenuScene extends Phaser.Scene {
     // this.checkConnectionStatus();
     if (document.getElementById("loadingIcon"))
       document.getElementById("loadingIcon").remove();
+
+    this.tonWalletsTemplate();
   }
+  // ! /////////////////////////// TON WALLET
+  async tonWalletsTemplate() {
+    this.SDKConnection = new TonConnectSDK.TonConnect();
+    this.tonWalletsData = await this.SDKConnection.getWallets();
+
+    const supportedWallets = [
+      {
+        name: "Wallet",
+        img: "tg-wallet-icon",
+      },
+      {
+        name: "Tonkeeper",
+        img: "tonkeeper-wallet-icon",
+      },
+      {
+        name: "OpenMask",
+        img: "openmask-wallet-icon",
+      },
+    ];
+
+    supportedWallets.forEach((walletData, i) =>
+      this.createWallet(100 + 350 * i, 100, walletData)
+    );
+  }
+
+  createWallet(x, y, walletData) {
+    const { universalLink, bridgeUrl } = this.getSDKWalletData(walletData.name);
+    const walletButton = new Button(this, x, y, walletData.img);
+
+    walletButton.onClick(() => {
+      this.SDKConnection.connect({
+        universalLink,
+        bridgeUrl,
+      });
+    });
+  }
+
+  getSDKWalletData(walletName) {
+    return this.tonWalletsData.find((wallet) => wallet.name === walletName);
+  }
+  // ! //////////////////////////////////////
 
   addRiskyJumperText() {
     const image = this.add
