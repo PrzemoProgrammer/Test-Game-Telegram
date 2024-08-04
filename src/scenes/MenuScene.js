@@ -71,6 +71,7 @@ class MenuScene extends Phaser.Scene {
       });
 
       window.open(connectURL);
+      console.log(connectURL);
     });
   }
 
