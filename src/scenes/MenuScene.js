@@ -60,7 +60,8 @@ class MenuScene extends Phaser.Scene {
     image.setInteractive();
 
     image.on("pointerdown", (pointer) => {
-      ("TelegramGameProxy.shareScore()");
+      console.log("clicked share button");
+      TelegramGameProxy.shareScore();
     });
   }
   // ! //////////////////////////////////////
