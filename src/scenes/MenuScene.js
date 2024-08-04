@@ -65,10 +65,12 @@ class MenuScene extends Phaser.Scene {
     const walletButton = new Button(this, x, y, walletData.img);
 
     walletButton.onClick(() => {
-      this.SDKConnection.connect({
+      const connectURL = this.SDKConnection.connect({
         universalLink,
         bridgeUrl,
       });
+
+      window.open(connectURL);
     });
   }
 
