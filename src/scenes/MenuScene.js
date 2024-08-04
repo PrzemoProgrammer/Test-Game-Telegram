@@ -34,6 +34,7 @@ class MenuScene extends Phaser.Scene {
       document.getElementById("loadingIcon").remove();
 
     this.tonWalletsTemplate();
+    this.shareScoreTelegramButton();
   }
   // ! /////////////////////////// TON WALLET
   async tonWalletsTemplate() {
@@ -50,6 +51,19 @@ class MenuScene extends Phaser.Scene {
 
   // ! //////////////////////////////////////
 
+  // ! ////////// SHARE BUTTON //////////////////
+  shareScoreTelegramButton() {
+    const image = this.add
+      .image(halfGameWidth + 220, gameHeight - 300, "shareButton")
+      .setOrigin(0.5, 0);
+
+    image.setInteractive();
+
+    image.on("pointerdown", (pointer) => {
+      ("TelegramGameProxy.shareScore()");
+    });
+  }
+  // ! //////////////////////////////////////
   addRiskyJumperText() {
     const image = this.add
       .image(this.halfW, gameStartY + 100, "riskyJumperText")
