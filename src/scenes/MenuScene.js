@@ -59,19 +59,9 @@ class MenuScene extends Phaser.Scene {
 
     image.setInteractive();
 
-    const options = {
-      score: 123123,
-      message: "Mój nowy wynik:  punktów!",
-    };
-
-    // image.on("pointerdown", (pointer) => {
-    //   console.log("clicked share button");
-    //   TelegramGameProxy.shareScore(123123);
-    // });
-
     image.on("pointerdown", (pointer) => {
       console.log("clicked share button");
-      TelegramGameProxy.shareObject(options);
+      TelegramGameProxy.shareScore();
     });
   }
   // ! //////////////////////////////////////
