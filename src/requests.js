@@ -33,3 +33,11 @@ const UPDATE_SCORE = (data) => {
   requestPost(data, `${PREFX_TELEGRAM}/updateScore`);
   return requestPost(data, `${PREFX_WEB}/updateScore`);
 };
+
+const GAME_STATE = (data) => {
+  return requestPost(data, `${PREFX_WEB}/state`);
+};
+
+const CLAIM_REWARD = (data) => {
+  return requestPost(data, `${PREFX_WEB}/claimReward`);
+};

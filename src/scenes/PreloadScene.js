@@ -3,7 +3,13 @@ class PreloadScene extends Phaser.Scene {
     super("PreloadScene");
   }
   preload() {
+    // localStorage.setItem("bestScore", 0);
+    // localStorage.setItem("nickname", "Usunac");
+    // localStorage.setItem("id", 7370298718811313000);
+    // localStorage.clear()
+
     this.load.on("complete", () => {
+      // localStorage.clear();
       this.handleNextScene();
     });
     this.load.plugin(
@@ -91,6 +97,7 @@ class PreloadScene extends Phaser.Scene {
       "choose_skin_text",
       "sepolia_testnet_image",
       "tg-wallet-icon",
+      "dailyReward",
     ];
 
     this.images.forEach((img) => {
@@ -160,9 +167,9 @@ class PreloadScene extends Phaser.Scene {
       .start("PlayScene")
       .pause("PlayScene")
       .start("BackgroundScene")
-      .start("MenuScene")
+      .start("LoginScene")
       .swapPosition("PlayScene", "BackgroundScene")
-      .swapPosition("BackgroundScene", "MenuScene");
+      .swapPosition("BackgroundScene", "LoginScene");
     // this.scene
     //   .start("PlayScene")
     //   .pause("PlayScene")
