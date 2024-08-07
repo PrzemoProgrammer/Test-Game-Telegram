@@ -1,4 +1,4 @@
-const SERVER_URL = "https://personalserver-c0422f9a9869.herokuapp.com"; // "http://localhost:8081"     "https://personalserver-c0422f9a9869.herokuapp.com";
+const SERVER_URL = "http://localhost:8081"; // "http://localhost:8081"     "https://personalserver-c0422f9a9869.herokuapp.com";
 const PREFX_WEB = "riskyJumperWeb";
 const PREFX_TELEGRAM = "riskyJumperTelegram";
 
