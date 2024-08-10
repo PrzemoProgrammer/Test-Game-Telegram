@@ -30,9 +30,10 @@ class MenuScene extends Phaser.Scene {
     this.rankingButton = this.addRankingButton();
     this.achievementsButton = this.addAchievementsButton();
     this.dailyReward = this.createDailyReward();
+    this.informationWindow = this.createInformationWindow();
     //! /////////////////////////
-    this.tonWalletsTemplate();
-    this.shareScoreTelegramButton();
+    // this.tonWalletsTemplate();
+    // this.shareScoreTelegramButton = this.shareScoreTelegramButton();
     //! /////////////////////////
     //! WYŚWIETL NICK GRACZOWI
     this.fetchData();
@@ -41,36 +42,38 @@ class MenuScene extends Phaser.Scene {
       document.getElementById("loadingIcon").remove();
   }
   // ! /////////////////////////// TON WALLET
-  async tonWalletsTemplate() {
-    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-      manifestUrl: "https://<YOUR_APP_URL>/tonconnect-manifest.json",
-    });
-    const connectButton = new Button(this, this.halfW, 150, "tg-wallet-icon");
-    connectButton.onClick(() => {
-      tonConnectUI.modal.open();
-    });
+  // async tonWalletsTemplate() {
+  //   const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+  //     manifestUrl: "https://<YOUR_APP_URL>/tonconnect-manifest.json",
+  //   });
+  //   const connectButton = new Button(this, this.halfW, 150, "tg-wallet-icon");
+  //   connectButton.onClick(() => {
+  //     tonConnectUI.modal.open();
+  //   });
 
-    tonConnectUI.modal.onStateChange((state) => console.log(state));
-  }
+  //   tonConnectUI.modal.onStateChange((state) => console.log(state));
+  // }
   // ! //////////////////////////////////////
 
   // ! ////////// SHARE BUTTON //////////////////
-  shareScoreTelegramButton() {
-    const shareButton = new Button(
-      this,
-      halfGameWidth + 220,
-      halfGameHeight + halfGameHeight / 2,
-      "shareButton"
-    );
-    shareButton.onClick(() => {
-      console.log("clicked share button");
-      // TelegramGameProxy.shareScore();
-      window.parent.postMessage(
-        JSON.stringify({ eventType: "share_score", eventData: "33333" }),
-        "*"
-      );
-    });
-  }
+  // shareScoreTelegramButton() {
+  //   const shareButton = new Button(
+  //     this,
+  //     halfGameWidth + 220,
+  //     halfGameHeight + halfGameHeight / 2,
+  //     "shareButton"
+  //   ).setScale(0.7);
+  //   shareButton.onClick(() => {
+  //     console.log("clicked share button");
+  //     // TelegramGameProxy.shareScore();
+  //     window.parent.postMessage(
+  //       JSON.stringify({ eventType: "share_score", eventData: "33333" }),
+  //       "*"
+  //     );
+  //   });
+
+  //   return shareButton;
+  // }
   // ! //////////////////////////////////////
 
   // ! ///////// DAILY REWARD ///////////////
@@ -82,11 +85,13 @@ class MenuScene extends Phaser.Scene {
     );
     dailyReward.image.onClick(async () => {
       if (!this.dailyReward.isActive) return;
+      this.dailyReward.setState(false);
       const data = {
         id: localStorage.getItem("id"),
         daily: true,
       };
       const dailyRewardData = await (await CLAIM_REWARD(data)).json();
+      this.informationWindow.updateAndDisplay(dailyRewardData.reward);
       this.dailyReward.update(dailyRewardData);
     });
     return dailyReward;
@@ -102,6 +107,13 @@ class MenuScene extends Phaser.Scene {
     const gameState = await (await GAME_STATE(data)).json();
     const { dailyReward } = gameState;
     this.dailyReward.update(dailyReward);
+  }
+  // ! //////////////////////////////////////
+
+  // ! ////////// INFROMATION WINDOW ///////////////////
+  createInformationWindow() {
+    const window = new InformationWindow(this, this.halfW, this.halfH);
+    return window;
   }
   // ! //////////////////////////////////////
 
@@ -382,6 +394,13 @@ class MenuScene extends Phaser.Scene {
       ease: "Back.in",
       duration: 400,
       y: gameHeight + 200,
+    });
+
+    this.tweens.add({
+      targets: this.dailyReward,
+      ease: "Back.in",
+      duration: 450,
+      y: gameHeight,
     });
 
     this.tweens.add({
